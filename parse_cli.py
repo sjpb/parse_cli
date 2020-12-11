@@ -19,6 +19,21 @@ def parse_cli(values, defaults=None):
                       If a value in `defaults` is a bool, the option takes no argument, otherwise it does.
 
         Returns (options, arguments) where the former is a dict giving options and the latter is a sequence giving arguments.
+
+        Examples:
+        >>> parse_cli('-v --option foo arg1 arg2'.split(), {'-v':False, '--option':'bar'})
+        ({'-v': True, '--option': 'foo'}, ['arg1', 'arg2'])
+        >>> parse_cli('--option foo arg1'.split(), {'-v':True, '--option':'bar'})
+        ({'-v': True, '--option': 'foo'}, ['arg1'])
+        >>> parse_cli('--option foo'.split(), {'-v':True, '--option':'bar'})
+        ({'-v': True, '--option': 'foo'}, [])
+        >>> parse_cli(''.split(), {'-v':True, '--option':'bar'})
+        ({'-v': True, '--option': 'bar'}, [])
+        >>> parse_cli('-v'.split(), {'-v':False, '--option':'bar'})
+        ({'-v': True, '--option': 'bar'}, [])
+        >>> parse_cli('argX'.split(), {})
+        ({}, ['argX'])
+
     """
 
     options = {} if defaults is None else defaults.copy()
@@ -38,19 +53,6 @@ def parse_cli(values, defaults=None):
     return (options, args)
 
 
-
-if __name__ == '__main__':
-
-    tests = [
-        ('-v --option foo arg1 arg2'.split(), {'-v':False, '--option':'bar'}),
-        ('--option foo arg1'.split(), {'-v':True, '--option':'bar'}),
-        ('--option foo'.split(), {'-v':True, '--option':'bar'}),
-        (''.split(), {'-v':True, '--option':'bar'}),
-        ('-v'.split(), {'-v':False, '--option':'bar'}),
-    ]
-
-    if len(sys.argv) > 1:
-        print(parse_cli(sys.argv[1:]))
-    else:
-        for t in tests:
-            print(parse_cli(*t))
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
