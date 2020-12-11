@@ -15,7 +15,7 @@ def parse_cli(values, defaults=None):
 
         Args:
             values: sequence of str giving command-line, i.e. usually sys.argv[1:]
-            defaults: dict. Define all options in here - any element of `values` which is not a key in `defaults` is assumed to be an argument.
+            defaults: dict defining options - any element of `values` which is not a key in `defaults` is assumed to be an argument.
                       If a value in `defaults` is a bool, the option takes no argument, otherwise it does.
 
         Returns (options, arguments) where the former is a dict giving options and the latter is a sequence giving arguments.
