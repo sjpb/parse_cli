@@ -26,7 +26,7 @@ def parse_cli(values, defaults=None):
     idx = 0
     while idx < len(values):
         v = values[idx]
-        if v in defaults: # is option
+        if v in options: # is option
             if isinstance(defaults[v], bool): # is flag
                 options[v] = True
             else:
@@ -49,5 +49,8 @@ if __name__ == '__main__':
         ('-v'.split(), {'-v':False, '--option':'bar'}),
     ]
 
-    for t in tests:
-        print(parse_cli(*t))
+    if len(sys.argv) > 1:
+        print(parse_cli(sys.argv[1:]))
+    else:
+        for t in tests:
+            print(parse_cli(*t))
